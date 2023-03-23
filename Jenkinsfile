@@ -157,7 +157,7 @@ def collect_vars(stage, my_env) {
 }
 
 def prepare(stage, commit) {
-    echo "Switched to jenkins agent: ${GIT_REPO_NAME}-${env.BRANCH_NAME}-${stage}-${commit}"
+    //echo "Switched to jenkins agent: ${GIT_REPO_NAME}-${env.BRANCH_NAME}-${stage}-${commit}"
     checkout([
         $class: 'GitSCM',
         branches: scm.branches,
