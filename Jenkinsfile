@@ -52,8 +52,8 @@ pipeline {
                                 script {
                                     currentBuild.displayName = params.version
                                 }
-                                sh 'terraform init -input=false'
-                                sh 'terraform plan -input=false'
+                                sh 'terraform -chdir=myAppCICD init -input=false'
+                                sh 'terraform -chdir=myAppCICD plan -input=false'
                             }
                         }
                          stage('Apply') {
@@ -158,7 +158,13 @@ def collect_vars(stage, my_env) {
 
 def prepare(stage, commit) {
     echo "Switched to jenkins agent: ${GIT_REPO_NAME}-${env.BRANCH_NAME}-${stage}-${commit}"
-    checkout scm
+    checkout([
+        $class: 'GitSCM',
+        branches: scm.branches,
+        doGenerateSubmoduleConfigurations: true,
+        extensions: scm.extensions + [[$class: 'SubmoduleOption', parentCredentials: true]],
+        userRemoteConfigs: scm.userRemoteConfigs
+    ])
     return null
 }
 
