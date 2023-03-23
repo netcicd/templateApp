@@ -1,0 +1,22 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+---
+####################################################################
+# Classic smoke testing                                            #
+####################################################################
+
+- name: Where is the fire
+  local_action: shell robot -T --variable NODE:{{ inventory_hostname }}  --variable STAGE:{{ stage }} --name Hostname_test_{{ inventory_hostname }} --outputdir ../reports someApp_smoke.robot
+  args:
+    chdir: roles/presentation/files/tests/
+  register: someApp_smoke_output
+  listen: someApp_smoke
+  
+- name: Print testresults
+  debug: 
+    var: someApp_smoke_output.stdout_lines
+  failed_when: "'Failed' in someApp_smoke_output.stdout"
+  listen: someApp_smoke
+...

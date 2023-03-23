@@ -1,0 +1,27 @@
+## This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+---
+- name: install SomeApp common configuration
+  import_tasks: common.yaml
+
+- name: install SomeApp customer specific configuration additions
+  import_tasks: customer.yaml
+
+- name: install SomeApp development environment specific configuration additions
+  import_tasks: development.yaml
+
+- name: install SomeApp test environment specific configuration additions
+  import_tasks: test.yaml
+
+- name: install SomeApp acceptance environment specific configuration additions
+  import_tasks: accept.yaml
+
+- name: install SomeApp production environment specific configuration additions
+  import_tasks: production.yaml
+
+- name: install SomeApp education environment specific configuration additions
+  import_tasks: education.yaml
+
+...

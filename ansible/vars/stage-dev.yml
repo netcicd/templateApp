@@ -1,0 +1,13 @@
+---
+appcicd:
+  children:
+    frontends:
+      hosts:
+        FE1:
+        FE2:
+        FE3:
+    application_servers:
+      hosts:
+        AS1:
+        AS3:
+...

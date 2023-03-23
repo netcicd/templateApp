@@ -1,0 +1,3 @@
+[submodule "AppCICD"]
+	path = AppCICD
+	url = https://github.com/myref/myAppCICD.git

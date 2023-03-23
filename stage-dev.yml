@@ -1,0 +1,33 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+---
+- name: Start of CI/CD pipeline
+  hosts: stage-dev
+  gather_facts: true
+
+    
+  roles:
+    - develop
+
+
+- name: Aggregate test results
+  hosts: localhost
+  tasks:
+    - name: Check if tests are done
+      find:
+        path: roles/develop/files/reports
+        pattern: "*.xml"
+      register: develop_test_result
+
+    - debug: 
+        msg: "No reports found"
+      when: develop_test_result.matched == 0
+
+    - name: "Publishing reports" 
+      local_action: shell rebot --output develop_unittest.xml --log develop_unittest_log.html --report develop_unittest_report.html --outputdir ../ *.xml 
+      args:
+        chdir: roles/develop/files/reports
+      when: develop_test_result.matched != 0 
+...
